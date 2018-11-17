@@ -1,41 +1,39 @@
 $(function() {
   $(".devour").on("click", function (event) {
+    //captures id and new state
     var id = $(this).data("id");
     var newDev = $(this).data("eaten");
 
+    //creates object to be passed in put request
     var changeDevoured = {
       devoured: newDev
     };
 
-    // Send the PUT request.
     $.ajax("/api/burgers/" + id, {
       type: "PUT",
       data: changeDevoured
     }).then(
       function () {
-        console.log("changed sleep to", newDev);
-        // Reload the page to get the updated list
+        console.log("changed devoured to", newDev);
         location.reload();
       }
     );
   });
 
   $(".create-form").on("submit", function (event) {
-    // Make sure to preventDefault on a submit event.
     event.preventDefault();
 
+    //create object to pass into post request
     var newBurger = {
       name: $("#burger").val().trim(),
     };
 
-    // Send the POST request.
     $.ajax("/api/burgers", {
       type: "POST",
       data: newBurger
     }).then(
       function () {
         console.log("created burger");
-        // Reload the page to get the updated list
         location.reload();
       }
     );
